@@ -1,0 +1,11 @@
+body {
+padding: 5px;
+}
+
+
+button {
+    background: #44ec0d !important;
+}
+.sm-blue a:hover, .sm-blue a:focus, .sm-blue a:active, .sm-blue a.highlighted {
+    background: #234b5f !important;
+}
