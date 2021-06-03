@@ -9,10 +9,3 @@ button {
 .sm-blue a:hover, .sm-blue a:focus, .sm-blue a:active, .sm-blue a.highlighted {
     background: #234b5f !important;
 }
-button.btn.btn-primary, button.btn.btn-segundario {
-    font-size: 15px;
-    border: solid 2px #000 !important;
-    padding-top: 0px;
-    color: #000;
-    line-height: 22px;
-}

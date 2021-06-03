@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.upf.ads.rondasgp8.jpa.JpaUtil;
 import br.upf.ads.rondasgp8.model.Pessoa;
-import br.upf.ads.rondasgp8.uteis.Upload;
+import br.upf.ads.uteis.Upload;
 import net.iamvegan.multipartrequest.HttpServletMultipartRequest;
 
 /**
@@ -70,21 +70,15 @@ public class PessoaCon extends HttpServlet {
 	}
 	
 	private void gravarFoto(HttpServletRequest request, HttpServletResponse response) {
-		EntityManager em = JpaUtil.getEntityManager(); // pega a entitymanager para persistir
+		EntityManager em = JpaUtil.getEntityManager();
 		// ----------------------------------------------------------------------------------
-		em.getTransaction().begin(); 	// inicia a transação
+		em.getTransaction().begin(); 
 		Pessoa obj = em.find(Pessoa.class, Integer.parseInt(request.getParameter("id")));
 
-		// Vamos ver se veio o arquivo do form
 		if (request.getParameter("foto") != null) {
 			String nomeArquivo = "Foto"+request.getParameter("id")+".jpg";
-			// pegar o caminho de contexto de execução da aplicação para a pasta uploads
 			String caminho = getServletConfig().getServletContext().getRealPath("/") + "Privada/Pessoa/uploads";
-			// copiar arquivo de upload para a pasta
 			Upload.copiarArquivo((HttpServletMultipartRequest) request, "foto", caminho, nomeArquivo);
-			
-			
-			// colocar no banco de dados
 			obj.setFoto( Upload.getBytesArquivo((HttpServletMultipartRequest) request, "foto") );
 			
 		}		

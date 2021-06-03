@@ -47,6 +47,12 @@
 						<img name="imagemBD" id="imagemBD" width="300" height="300"
 							 src="data:image/jpg;base64,${obj.fotoBase64}" />
 					</div>
+
+
+
+
+
+
 				</div>
 			</div>
 

@@ -8,7 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 @Entity
-public class Pessoa implements Serializable {
+public class Pessoa implements Serializable {  // 2) implementar Serializable
+	// 1) atributos encapsulados = private 
 	@Id
 	private Integer id;
 	private String nome;
