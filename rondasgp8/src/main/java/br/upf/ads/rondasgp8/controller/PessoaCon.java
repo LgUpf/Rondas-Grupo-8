@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.upf.ads.rondasgp8.jpa.JpaUtil;
 import br.upf.ads.rondasgp8.model.Pessoa;
+import br.upf.ads.rondasgp8.uteis.Upload;
+import net.iamvegan.multipartrequest.HttpServletMultipartRequest;
 
 /**
  * Servlet implementation class PessoaCon
@@ -27,6 +29,14 @@ public class PessoaCon extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		request = new HttpServletMultipartRequest(
+				request,
+				HttpServletMultipartRequest.MAX_CONTENT_LENGTH,
+				HttpServletMultipartRequest.SAVE_TO_TMPDIR,
+				HttpServletMultipartRequest.IGNORE_ON_MAX_LENGTH,
+				HttpServletMultipartRequest.DEFAULT_ENCODING);		
+		
+		
 		if (request.getParameter("incluir") != null) {
 			incluir(request, response);
 		} else if (request.getParameter("alterar") != null) {
@@ -37,11 +47,56 @@ public class PessoaCon extends HttpServlet {
 			gravar(request, response);			
 		} else if (request.getParameter("cancelar") != null) {
 			cancelar(request, response);			
+		} else if (request.getParameter("alterarFoto") != null) {
+			alterarFoto(request, response);
+		} else if (request.getParameter("gravarFoto") != null) {
+			gravarFoto(request, response);	
 		} else {
 			listar(request, response);
 		}
 		
 	}
+	
+	private void alterarFoto(HttpServletRequest request, HttpServletResponse response) {
+		try {
+			EntityManager em = JpaUtil.getEntityManager();
+			Pessoa obj = em.find(Pessoa.class, Integer.parseInt(request.getParameter("alterarFoto")));
+			request.setAttribute("obj", obj);
+			em.close();
+			request.getRequestDispatcher("PessoaFoto.jsp").forward(request, response);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	private void gravarFoto(HttpServletRequest request, HttpServletResponse response) {
+		EntityManager em = JpaUtil.getEntityManager(); // pega a entitymanager para persistir
+		// ----------------------------------------------------------------------------------
+		em.getTransaction().begin(); 	// inicia a transação
+		Pessoa obj = em.find(Pessoa.class, Integer.parseInt(request.getParameter("id")));
+
+		// Vamos ver se veio o arquivo do form
+		if (request.getParameter("foto") != null) {
+			String nomeArquivo = "Foto"+request.getParameter("id")+".jpg";
+			// pegar o caminho de contexto de execução da aplicação para a pasta uploads
+			String caminho = getServletConfig().getServletContext().getRealPath("/") + "Privada/Pessoa/uploads";
+			// copiar arquivo de upload para a pasta
+			Upload.copiarArquivo((HttpServletMultipartRequest) request, "foto", caminho, nomeArquivo);
+			
+			
+			// colocar no banco de dados
+			obj.setFoto( Upload.getBytesArquivo((HttpServletMultipartRequest) request, "foto") );
+			
+		}		
+		
+		em.merge(obj); 	
+		em.getTransaction().commit(); 	// commit na transação
+		em.close();
+		listar(request, response);
+	}	
+	
+	
+	
 
 	private void listar(HttpServletRequest request, HttpServletResponse response) {
 		try {

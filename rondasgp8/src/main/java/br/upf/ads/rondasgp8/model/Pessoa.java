@@ -1,16 +1,21 @@
 package br.upf.ads.rondasgp8.model;
 
 import java.io.Serializable;
+import java.util.Base64;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 @Entity
-public class Pessoa implements Serializable {  // 2) implementar Serializable
+public class Pessoa implements Serializable {
 	@Id
 	private Integer id;
 	private String nome;
 	private Integer idade;
+	
+	@Lob
+	private byte[] foto;
 	
 	// Outros métodos para operações envolvendo pessoa
 	public String getDiasVividos() {
@@ -104,5 +109,21 @@ public class Pessoa implements Serializable {  // 2) implementar Serializable
 			return false;
 		return true;
 	}
+
+	public byte[] getFoto() {
+		return foto;
+	}
+
+	public void setFoto(byte[] foto) {
+		this.foto = foto;
+	}
+	
+	public String getFotoBase64() {
+		if (foto != null)
+		   return new String(Base64.getEncoder().encode(foto));
+		else
+		   return "";
+	}
+	
 	
 }
