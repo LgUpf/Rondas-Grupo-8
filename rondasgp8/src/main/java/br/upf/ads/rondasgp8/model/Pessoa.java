@@ -9,39 +9,33 @@ import javax.persistence.Lob;
 
 @Entity
 public class Pessoa implements Serializable {  // 2) implementar Serializable
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	// 1) atributos encapsulados = private 
 	@Id
 	private Integer id;
 	private String nome;
-	private Integer idade;
+	private String loginapp;
+	private String senha;
 	
 	@Lob
 	private byte[] foto;
 	
-	// Outros métodos para operações envolvendo pessoa
-	public String getDiasVividos() {
-		return "Sr(a). "+nome+" você viveu aproximadamente "+(idade*365)+" dias.";
-	}
-	
-	public String getFaixaEtaria() {
-		if (idade <= 15)
-			return "Jovens - Indivíduos de até 15 anos";
-		else if (idade >= 16 && idade <= 64)
-		    return "Adultos - Indivíduos com idade entre 16 até 64 anos";
-		else
-		   return "Idosos - Indivíduos de 65 anos em diante";
-	}
 	
 	// 3) Construtor sem argumentos
 	public Pessoa() {
 		super();
 	}
 	
-	public Pessoa(Integer id, String nome, Integer idade) {
+	public Pessoa(Integer id, String nome, String loginapp, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.idade = idade;
+		this.loginapp = loginapp;
+		this.senha = senha;
+		
 	}
 	
 	public Pessoa(Integer id) {
@@ -49,10 +43,10 @@ public class Pessoa implements Serializable {  // 2) implementar Serializable
 		this.id = id;
 	}
 
-	public Pessoa(String nome, Integer idade) {
+	public Pessoa(String nome) {
 		super();
 		this.nome = nome;
-		this.idade = idade;
+		
 	}
 
 	// 4) Possuir métodos get e set públicos para atributos
@@ -64,6 +58,22 @@ public class Pessoa implements Serializable {  // 2) implementar Serializable
 		this.id = id;
 	}
 
+	public String getLoginApp() {
+		return loginapp;
+	}
+
+	public void setLoginApp(String loginapp) {
+		this.loginapp = loginapp;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -72,13 +82,6 @@ public class Pessoa implements Serializable {  // 2) implementar Serializable
 		this.nome = nome;
 	}
 
-	public Integer getIdade() {
-		return idade;
-	}
-
-	public void setIdade(Integer idade) {
-		this.idade = idade;
-	}
 
 	// 6) Substituições equals, hashCode e toString	
 	@Override

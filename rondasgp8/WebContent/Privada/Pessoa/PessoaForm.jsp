@@ -25,13 +25,7 @@
 				</div>
 			</div>
 	
-			<div class="row">
-				<div class="col-md-2">
-			        <label>Idade</label>
-			        <input class="form-control"  type="number" name="idade" value="${obj.idade}">			
-				</div>
-			</div>
-	
+		
 	
 	
 	

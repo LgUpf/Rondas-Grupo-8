@@ -39,21 +39,20 @@
 	    	
 	    }
 	</script>
-	
 <h1>LISTAGEM DE USUÁRIOS</h1>
-<form action="UsuarioCon">
+
+<form action="LocomocaoCon">
 	<button type="submit" name="incluir">Incluir</button>
 	
 	<table border="1" class="table table-hover table-condensed">
-		<c:forEach items="${lista}" var="u" varStatus="cont">
+		<c:forEach items="${lista}" var="l" varStatus="cont">
 		   <tr>
-		      <td>${u.id}</td>
-		      <td>${u.nome}</td>    
-		      <td>${u.email}</td>
-		      <td>${u.senha}</td>
-		      <td></td>
-		      <td><button type="submit" name="alterar" value="${u.id}">Alterar</button></td>
-		      <td><button type="submit" name="excluir" value="${u.id}">Excluir</button></td>
+		      <td>${l.id}</td>
+		      <td>${l.descricao}</td>    
+		      <td>${l.placa}</td>
+		       <td></td>
+		      <td><button type="submit" name="alterar" value="${l.id}">Alterar</button></td>
+		      <td><button type="submit" name="excluir" value="${l.id}">Excluir</button></td>
 		   </tr>
 	    </c:forEach>
 	</table>

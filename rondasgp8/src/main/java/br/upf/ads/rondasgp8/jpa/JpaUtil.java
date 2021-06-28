@@ -10,7 +10,7 @@ public class JpaUtil {
 	
 	public static EntityManager getEntityManager() {
 		if (emf == null) {
-			emf = Persistence.createEntityManagerFactory("app01");
+			emf = Persistence.createEntityManagerFactory("rondasgp8");
 		}
 		return emf.createEntityManager();
 	}

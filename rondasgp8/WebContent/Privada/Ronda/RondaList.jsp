@@ -15,48 +15,21 @@
 </head>
 <body>
 	<jsp:include page="../fragmentos/Cabecalho.jsp"></jsp:include>
+
+	<h1>LISTAGEM DE RONDAS</h1>
 	
-		<script type="text/javascript">
-	    function confirmar(){
-	    	$.confirm({
-	    	    title: 'Confirmar',
-	    	    content: 'Confirmar a exclusão?',
-	    	    type: 'orange',
-	    	    typeAnimated: true,
-	    	    buttons: {
-	    	        Sim: { 
-	    	        	text: 'Sim',
-	    	            btnClass: 'btn-orange',
-	    	            action: function(){ 
-	    	            	$("#excluir").attr("type", "submit");
-	    	            	$("#excluir").click();
-	    	        	}
-	    	        },
-	    	        Nao: { 
-	    	        	text: 'Não',
-	    	            btnClass: 'btn-dark',
-	    	            action: function(){ 
-	    	            	// programar algo se clicou não
-	    	        	}
-	    	        },
-	    	    }
-	    	});
-	    	
-	    	
-	    }
-	</script>
-	
-	
-	<h1>LISTAGEM DE PESSOAS</h1>
-	
-	<form action="PessoaCon">
+	<form action="RondaCon">
 		<button type="submit" name="incluir"><i class="fas fa-plus-circle"></i> Incluir</button>
 		
 		<table border="1" class="table table-hover table-condensed">
 		    <thead>
 		       <tr>
 		           <td>Id</td>
-		           <td>Nome</td>
+		           <td>Data Inicio</td>
+		           <td>Data Final</td>
+		           <td>Lat</td>
+		           <td>Log</td>
+		           <td>Data Ultima</td>
 		           <td></td>
 		           <td></td>
 		       </tr>
@@ -64,8 +37,13 @@
 			<c:forEach items="${lista}" var="p" varStatus="cont">
 			   <tr>
 			      <td>${p.id}</td>
-			      <td>${p.nome}</td>    
-			      <td><button type="submit" name="alterarFoto" value="${p.id}">Foto</button></td>
+			      <td>${p.dataHoraInicio}</td>   
+			      <td>${p.dataHoraFim}</td>
+			      <td>${p.latUltima}</td>    
+			      <td>${p.lonUltima}</td>
+			      <td>${p.dataHoraUltima}</td>
+			      <td><button type="submit" name="vigilantes" value="${p.id}">Vigilantes</button></td>
+			      
 			      <td><button type="submit" name="alterar" value="${p.id}">Alterar</button></td>
 			      <td><button type="button" onclick="confirmar()" id="excluir" name="excluir" value="${p.id}">Excluir</button></td>
 			   </tr>

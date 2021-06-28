@@ -27,11 +27,15 @@
 		    <li><a href="#">Cadastro</a>
 		      <ul>
 		        <li><a href="../Pessoa/PessoaCon">Pessoas</a></li>
-		        <li><a href="../Usuario/UsuarioCon">Usuarios</a></li>
+		        <li><a href="../Ronda/RondaCon">Rondas</a></li>
+		         <li><a href="../Ocorrencia/OcorrenciaCon">Ocorrencia</a></li>
+		         <li><a href="../Usuario/UsuarioCon">Usuarios</a></li>
+		          <li><a href="../Locomocao/LocomocaoCon">Locomocao</a></li>
+		        <li><a href="../Localizacao/LocalizacaoCon">Localizacao</a></li>
 		 
 		        <li><a href="#">Basicos</a>
 		          <ul>
-		            <li><a href="#">Usuários</a></li>
+		            <li><a href="../Usuario/UsuarioCon">Usuarios</a></li>
 		      
 		          </ul>
 		        </li>

@@ -7,25 +7,48 @@
 </head>
 <body>
 	<jsp:include page="../fragmentos/Cabecalho.jsp"></jsp:include>
-		<form action="PessoaCon" method="post" enctype="multipart/form-data">
+		<form action="OcorrenciaCon" method="post" enctype="multipart/form-data">
 			<fieldset>
 				<legend>Formulário:</legend>
-				 <div class="row">
+	  <div class="row">
 				  <div class="col-md-2">
 					<label>Id</label> <input class="form-control" type="number"
 					readonly="readonly" name="id" value="${obj.id}">
 				</div>
 		</div>
-			<div class="row">
+		<div class="row">
 				<div class="col-md-5">
-					<label>Nome</label> <input class="form-control" type="text"
-						name="nome" readonly="readonly" value="${obj.nome}">
+					<label>Descricao</label> 
+					<input class="form-control" type="text" name="descricao" readonly="readonly" value="${obj.descricao}">
+						
 				</div>
 		</div>
+		
+		<div class="row">
+				<div class="col-md-5">
+					<label>DataHora</label>
+					<input class="form-control" type="text" name="dataHora" readonly="readonly" value="${obj.dataHora}">		
+				</div>
+		</div>
+		
+		
+		<div class="row">
+				<div class="col-md-5">
+					<label>Latitude</label> 
+					<input class="form-control" type="text" name="latitude" readonly="readonly" value="${obj.latitude}">
+				</div>
+		</div>
+		
+		<div class="row">
+				<div class="col-md-5">
+					<label>Longitude</label>
+					<input class="form-control" type="text" name="longitude" readonly="readonly" value="${obj.longitude}">	
+				</div>
+		</div>
+		
 			<div class="row">
 				<div class="col-md-2">				
 					<label>Foto</label> 
-					
 					<input type="file" name="foto"/><br>
 					
 					<div id="areaImagem">

@@ -25,8 +25,8 @@
 	   </div> 
 	   <div class="panel-body"> 
 	   <!-- corpo do painel --> 
-	      <label>Login</label>
-	      <input type="text" name="login" class="form-control">
+	      <label>E-mail</label>
+	      <input type="text" name="email" class="form-control">
 
 	      <label>Senha</label>
 	      <input type="password" name="senha" class="form-control">

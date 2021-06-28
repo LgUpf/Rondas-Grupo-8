@@ -35,8 +35,8 @@ public class LoginServlet extends HttpServlet {
 
 		
 		EntityManager em = JpaUtil.getEntityManager();  
-		Query qry = em.createQuery("from Usuario where login = :login and senha = :senha"); 
-		qry.setParameter("login", request.getParameter("login")); 
+		Query qry = em.createQuery("from Usuario where email = :email and senha = :senha"); 
+		qry.setParameter("email", request.getParameter("email")); 
 		qry.setParameter("senha", request.getParameter("senha")); 
 		Usuario usuarioLogado = null; 
 		try { 
@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 		} catch (Exception e) { } 
 		em.close();  
 		if (usuarioLogado == null){ 
-		   request.setAttribute("mensagemLogin", "Login ou Senha inválida!");   
+		   request.setAttribute("mensagemLogin", "E-mail ou Senha inválida!");   
 		   request.getRequestDispatcher("Login.jsp").forward(request, response);   
 		}else{ 
 		   request.getSession().setAttribute("usuarioLogado", usuarioLogado); 

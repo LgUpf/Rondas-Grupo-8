@@ -19,7 +19,7 @@ public class Usuario implements Serializable {
 	@Column(length = 50, unique = true, nullable = false)
 	private String nome;
 	@Column(length = 20, unique = true, nullable = false)
-	private String login;
+	private String email;
 	@Column(length = 50, nullable = false)
 	private String senha;
 	
@@ -31,11 +31,11 @@ public class Usuario implements Serializable {
 	
 	
 	
-	public Usuario(Integer id, String nome, String login, String senha) {
+	public Usuario(Integer id, String nome, String email, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.login = login;
+		this.email = email;
 		this.senha = senha;
 	}
 
@@ -55,12 +55,12 @@ public class Usuario implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}   
-	public String getLogin() {
-		return this.login;
+	public String getEmail() {
+		return this.email;
 	}
 
-	public void setLogin(String login) {
-		this.login = login;
+	public void setEmail(String email) {
+		this.email = email;
 	}   
 	public String getSenha() {
 		return this.senha;

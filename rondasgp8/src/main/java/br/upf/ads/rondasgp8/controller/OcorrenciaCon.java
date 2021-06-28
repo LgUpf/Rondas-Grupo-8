@@ -1,31 +1,34 @@
 package br.upf.ads.rondasgp8.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import br.upf.ads.rondasgp8.jpa.JpaUtil;
-import br.upf.ads.rondasgp8.model.Pessoa;
-import br.upf.ads.uteis.Upload;
+import br.upf.ads.rondasgp8.model.Ocorrencia;
 import net.iamvegan.multipartrequest.HttpServletMultipartRequest;
+import br.upf.ads.uteis.Upload;
+
+
 
 /**
- * Servlet implementation class PessoaCon
+ * Servlet implementation class OcorrenciaCon
  */
-@WebServlet("/Privada/Pessoa/PessoaCon")
-public class PessoaCon extends HttpServlet {
+@WebServlet("/Privada/Ocorrencia/OcorrenciaCon")
+public class OcorrenciaCon extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public PessoaCon() {
+    public OcorrenciaCon() {
         super();
     }
+
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -59,51 +62,39 @@ public class PessoaCon extends HttpServlet {
 	private void alterarFoto(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			EntityManager em = JpaUtil.getEntityManager();
-			Pessoa obj = em.find(Pessoa.class, Integer.parseInt(request.getParameter("alterarFoto")));
+			Ocorrencia obj = em.find(Ocorrencia.class, Integer.parseInt(request.getParameter("alterarFoto")));
 			request.setAttribute("obj", obj);
 			em.close();
-			request.getRequestDispatcher("PessoaFoto.jsp").forward(request, response);
+			request.getRequestDispatcher("OcorrenciaFoto.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 	}
 	
 	private void gravarFoto(HttpServletRequest request, HttpServletResponse response) {
-		EntityManager em = JpaUtil.getEntityManager(); // pega a entitymanager para persistir
-		// ----------------------------------------------------------------------------------
-		em.getTransaction().begin(); 	// inicia a transação
-		Pessoa obj = em.find(Pessoa.class, Integer.parseInt(request.getParameter("id")));
-
-		// Vamos ver se veio o arquivo do form
+		EntityManager em = JpaUtil.getEntityManager(); 
+		em.getTransaction().begin();
+		Ocorrencia obj = em.find(Ocorrencia.class, Integer.parseInt(request.getParameter("id")));
 		if (request.getParameter("foto") != null) {
 			String nomeArquivo = "Foto"+request.getParameter("id")+".jpg";
-			// pegar o caminho de contexto de execução da aplicação para a pasta uploads
-			String caminho = getServletConfig().getServletContext().getRealPath("/") + "Privada/Pessoa/uploads";
-			// copiar arquivo de upload para a pasta
+			String caminho = getServletConfig().getServletContext().getRealPath("/") + "Privada/Ocorrencia/uploads";
 			Upload.copiarArquivo((HttpServletMultipartRequest) request, "foto", caminho, nomeArquivo);
-			
-			
-			// colocar no banco de dados
 			obj.setFoto( Upload.getBytesArquivo((HttpServletMultipartRequest) request, "foto") );
 			
 		}		
 		
-		em.merge(obj); 	
-		em.getTransaction().commit(); 	// commit na transação
-		em.close();
-		listar(request, response);
-	}	
-	
-	
-	
-
+			em.merge(obj); 	
+			em.getTransaction().commit(); 
+			em.close();
+			listar(request, response);
+		}	
 	private void listar(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			EntityManager em = JpaUtil.getEntityManager();
-			List<Pessoa> lista = em.createQuery("from Pessoa").getResultList(); // recuperamos as pessoas do BD
+			List<Ocorrencia> lista = em.createQuery("from Ocorrencia").getResultList(); // recuperamos as Ocorrencias do BD
 			request.setAttribute("lista", lista);
 			em.close();
-			request.getRequestDispatcher("PessoaList.jsp").forward(request, response);
+			request.getRequestDispatcher("OcorrenciaList.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -113,26 +104,38 @@ public class PessoaCon extends HttpServlet {
 		listar(request, response);		
 	}
 
+
 	private void gravar(HttpServletRequest request, HttpServletResponse response) {
-		EntityManager em = JpaUtil.getEntityManager(); // pega a entitymanager para persistir
-		Pessoa p = new Pessoa(
-					Integer.parseInt(request.getParameter("id")), 
-					request.getParameter("nome"),
-					request.getParameter("loginapp"),
-					request.getParameter("senha"));
-		// ----------------------------------------------------------------------------------
-		em.getTransaction().begin(); 	// inicia a transação
-		em.merge(p); 					// incluir ou alterar o objeto no BD
-		em.getTransaction().commit(); 	// commit na transação
+			EntityManager em = JpaUtil.getEntityManager();
+			
+			Date d = null;
+			try {
+				d = new SimpleDateFormat("yyyy-MM-dd").parse(request.getParameter("dataHora").replaceAll("T", " "));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			Ocorrencia p = new Ocorrencia(
+						Integer.parseInt(request.getParameter("id")),
+						request.getParameter("titulo"), 
+						request.getParameter("descricao"), 
+						d, Float.parseFloat(request.getParameter("latitude")), 
+						Float.parseFloat(request.getParameter("longitude")));
+			
+		em.getTransaction().begin(); 
+		em.merge(p); 					
+		em.getTransaction().commit(); 
 		em.close();
 		listar(request, response);
+		
 	}
 
+	
 	private void excluir(HttpServletRequest request, HttpServletResponse response) {
-		EntityManager em = JpaUtil.getEntityManager(); // pega a entitymanager para persistir
-		em.getTransaction().begin(); 	// inicia a transação
-		em.remove(em.find(Pessoa.class, Integer.parseInt(request.getParameter("excluir"))));	// excluir o objeto no BD
-		em.getTransaction().commit(); 	// commit na transação
+		EntityManager em = JpaUtil.getEntityManager(); 
+		em.getTransaction().begin(); 
+		em.remove(em.find(Ocorrencia.class, Integer.parseInt(request.getParameter("excluir"))));	
+		em.getTransaction().commit(); 	
 		em.close();
 		listar(request, response);
 	}
@@ -140,10 +143,10 @@ public class PessoaCon extends HttpServlet {
 	private void alterar(HttpServletRequest request, HttpServletResponse response) {
 		try {
 			EntityManager em = JpaUtil.getEntityManager();
-			Pessoa obj = em.find(Pessoa.class, Integer.parseInt(request.getParameter("alterar")));
+			Ocorrencia obj = em.find(Ocorrencia.class, Integer.parseInt(request.getParameter("alterar")));
 			request.setAttribute("obj", obj);
 			em.close();
-			request.getRequestDispatcher("PessoaForm.jsp").forward(request, response);
+			request.getRequestDispatcher("OcorrenciaForm.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
@@ -151,13 +154,15 @@ public class PessoaCon extends HttpServlet {
 
 	private void incluir(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			Pessoa obj = new Pessoa();
+			Ocorrencia obj = new Ocorrencia();
 			request.setAttribute("obj", obj);
-			request.getRequestDispatcher("PessoaForm.jsp").forward(request, response);
+			request.getRequestDispatcher("OcorrenciaForm.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 		
 	}
+
+	/**
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)

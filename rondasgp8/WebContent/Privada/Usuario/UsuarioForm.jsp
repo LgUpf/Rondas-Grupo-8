@@ -23,8 +23,6 @@
          <label>Senha</label><br>
         <input type="text" name="senha" value="${obj.senha}"><br><br>
         
-        <label>Data Nascimento</label><br>
-        <input type="date" name="dataNascimento" value="${obj.dataNascimento}"><br><br>
         	
         <button type="submit" name="gravar">Gravar</button>	
         <button type="submit" name="cancelar">Cancelar</button>

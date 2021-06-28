@@ -4,12 +4,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+	<meta charset="ISO-8859-1">
+	
+	
+	
+
+	
+	
+	
 </head>
 <body>
-<body>
 	<jsp:include page="../fragmentos/Cabecalho.jsp"></jsp:include>
-		
+	
 		<script type="text/javascript">
 	    function confirmar(){
 	    	$.confirm({
@@ -40,20 +46,33 @@
 	    }
 	</script>
 	
-<h1>LISTAGEM DE USUÁRIOS</h1>
-<form action="UsuarioCon">
+	
+
+<h1>LISTAGEM DE LOCALIZAÇÃO</h1>
+
+<form action="LocalizacaoCon">
 	<button type="submit" name="incluir">Incluir</button>
 	
 	<table border="1" class="table table-hover table-condensed">
-		<c:forEach items="${lista}" var="u" varStatus="cont">
+	
+	  <thead>
+		       <tr>
+		           <td>Id</td>
+		           <td>Data hora</td>
+		           <td>Latitude</td>
+		           <td>Longitude</td>
+		           
+		       </tr>
+		    </thead>
+	
+		<c:forEach items="${lista}" var="p" varStatus="cont">
 		   <tr>
-		      <td>${u.id}</td>
-		      <td>${u.nome}</td>    
-		      <td>${u.email}</td>
-		      <td>${u.senha}</td>
-		      <td></td>
-		      <td><button type="submit" name="alterar" value="${u.id}">Alterar</button></td>
-		      <td><button type="submit" name="excluir" value="${u.id}">Excluir</button></td>
+		      <td>${p.id}</td>
+		      <td>${p.horaData}</td>    
+		      <td>${p.latitude}</td>
+		      <td>${p.longitude}</td>
+		      <td><button type="submit" name="alterar" value="${p.id}">Alterar</button></td>
+		      <td><button type="submit" name="excluir" value="${p.id}">Excluir</button></td>
 		   </tr>
 	    </c:forEach>
 	</table>
