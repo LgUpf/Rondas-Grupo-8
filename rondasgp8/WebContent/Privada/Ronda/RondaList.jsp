@@ -45,7 +45,7 @@
 			      <td><button type="submit" name="vigilantes" value="${p.id}">Vigilantes</button></td>
 			      
 			      <td><button type="submit" name="alterar" value="${p.id}">Alterar</button></td>
-			      <td><button type="button" onclick="confirmar()" id="excluir" name="excluir" value="${p.id}">Excluir</button></td>
+			       <td><button type="submit" name="excluir" value="${p.id}">Excluir</button></td>
 			   </tr>
 		    </c:forEach>
 		</table>
