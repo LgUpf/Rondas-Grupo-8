@@ -20,7 +20,7 @@
 	    function confirmar(){
 	    	$.confirm({
 	    	    title: 'Confirmar',
-	    	    content: 'Confirmar a exclus„o?',
+	    	    content: 'Confirmar a exclus√£o?',
 	    	    type: 'orange',
 	    	    typeAnimated: true,
 	    	    buttons: {
@@ -33,10 +33,10 @@
 	    	        	}
 	    	        },
 	    	        Nao: { 
-	    	        	text: 'N„o',
+	    	        	text: 'N√£o',
 	    	            btnClass: 'btn-dark',
 	    	            action: function(){ 
-	    	            	// programar algo se clicou n„o
+	    	            	// programar algo se clicou n√£o
 	    	        	}
 	    	        },
 	    	    }
@@ -72,7 +72,7 @@
 			      <td>${p.longitude}</td>  
 			      <td><button type="submit" name="alterarFoto" value="${p.id}">Foto</button></td>
 			      <td><button type="submit" name="alterar" value="${p.id}">Alterar</button></td>
-			      <td><button type="button" onclick="confirmar()" id="excluir" name="excluir" value="${p.id}">Excluir</button></td>
+			      <td><button type="submit" name="excluir" value="${p.id}">Excluir</button></td>
 			   </tr>
 		    </c:forEach>
 		</table>
